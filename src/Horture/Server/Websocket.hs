@@ -59,7 +59,6 @@ hortureClientConn = do
           Nothing -> liftIO (threadDelay 250_000) >> writerAction
           Just msg -> do
             logFM DebugS "TwitchEvent encountered, forwarding..."
-            logFM DebugS (logStr . pack . show $ msg)
             -- Forward twitch event to connected client.
             liftIO (sendTextData @HortureServerMessage conn (HortureEventSub msg))
             writerAction
@@ -68,15 +67,18 @@ hortureClientConn = do
   fullIfDone <- liftIO newEmptyMVar
   readerTID <- liftIO . forkIO $ do
     void (evalRWST (unHortureClient readerAction) env def)
-      `catch` \(_ :: ConnectionException) -> do
+      `catch` \(err :: ConnectionException) -> do
+        print $ "Reader thread terminated with error: " <> (pack . show $ err)
         putMVar fullIfDone ()
   writerTID <- liftIO . forkIO $ do
     void (evalRWST (unHortureClient writerAction) env def)
-      `catch` \(_ :: ConnectionException) -> do
+      `catch` \(err :: ConnectionException) -> do
+        print $ "Writer thread terminated with error: " <> (pack . show $ err)
         putMVar fullIfDone ()
   pingTID <- liftIO . forkIO $ do
     pingAction
-      `catch` \(_ :: ConnectionException) -> do
+      `catch` \(err :: ConnectionException) -> do
+        print $ "Ping thread terminated with error: " <> (pack . show $ err)
         putMVar fullIfDone ()
 
   void . liftIO . takeMVar $ fullIfDone
