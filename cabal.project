@@ -1,5 +1,5 @@
 packages:
-  horture-server.cabal
+  horture-server-lib.cabal
 
 -- We never, ever, want this.
 write-ghc-environment-files: never
