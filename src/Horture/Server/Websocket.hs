@@ -59,7 +59,6 @@ hortureClientConn = do
           Nothing -> liftIO (threadDelay 250_000) >> writerAction
           Just msg -> do
             logFM DebugS "TwitchEvent encountered, forwarding..."
-            logFM DebugS (logStr . pack . show $ msg)
             -- Forward twitch event to connected client.
             liftIO (sendTextData @HortureServerMessage conn (HortureEventSub msg))
             writerAction
