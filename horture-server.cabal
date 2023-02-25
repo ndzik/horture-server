@@ -1,0 +1,94 @@
+cabal-version:      2.4
+name:               horture-server
+version:            0.1.0.0
+
+-- A short (one-line) description of the package.
+-- synopsis:
+
+-- A longer description of the package.
+-- description:
+
+-- A URL where users can report bugs.
+-- bug-reports:
+
+-- The license under which the package is released.
+-- license:
+author:             Norbert Dzikowski
+maintainer:         norbert@perun.network
+
+-- A copyright notice.
+-- copyright:
+-- category:
+extra-source-files: CHANGELOG.md
+
+library horture-server-lib
+    default-extensions:     TemplateHaskell
+                            , TypeApplications
+                            , TypeOperators
+                            , OverloadedStrings
+                            , LambdaCase
+                            , NumericUnderscores
+                            , ScopedTypeVariables
+    hs-source-dirs:     src/
+    default-language:   Haskell2010
+    ghc-options:
+                        -Wall
+                        -fno-warn-name-shadowing
+                        -fno-warn-unticked-promoted-constructors
+                        -fno-warn-orphans
+
+    build-depends:      base ^>=4.14.3.0
+                        , haskell-twitch-api
+                        , text
+                        , lens
+                        , servant-client
+                        , servant-client-core
+                        , http-types
+                        , http-client
+                        , http-client-tls
+                        , data-default
+                        , mtl
+                        , synchronous-channels
+                        , wai
+                        , warp
+                        , warp-tls
+                        , websockets
+                        , wai-websockets
+                        , aeson
+                        , random
+                        , bytestring
+                        , cryptonite
+                        , memory
+                        , katip
+
+    exposed-modules:    Horture.Server.Config
+                        , Horture.Server.Reader
+                        , Horture.Server.Application
+                        , Horture.Server.Client
+                        , Horture.Server.Message
+                        , Horture.Server.Websocket
+                        , Horture.Server.Server
+
+executable horture-server
+  default-extensions:     LambdaCase
+  hs-source-dirs:           app/Server
+  main-is:                  Main.hs
+  ghc-options:
+                            -Wall
+                            -fno-warn-name-shadowing
+                            -threaded
+                            -O2
+  other-modules:            Config
+  build-depends:            base ^>=4.14.3.0
+                            , horture-server-lib
+                            , haskell-twitch-api
+                            , directory
+                            , optparse-applicative
+                            , aeson
+                            , text
+                            , http-client-tls
+                            , warp
+                            , servant-client
+                            , http-client
+                            , bytestring
+  default-language:         Haskell2010
