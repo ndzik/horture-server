@@ -21,6 +21,8 @@ data HortureClientMessage
       }
   | HortureGarbage
 
+$(deriveJSON defaultOptions ''HortureClientMessage)
+
 instance WebSocketsData HortureClientMessage where
   fromDataMessage (Network.WebSockets.Text bs _) = fromMaybe HortureGarbage (decode bs)
   fromDataMessage (Network.WebSockets.Binary bs) = fromMaybe HortureGarbage (decode bs)
@@ -33,11 +35,11 @@ data HortureServerMessage
   | HortureServerGarbage
   deriving (Show)
 
+$(deriveJSON defaultOptions ''HortureServerMessage)
+
 instance WebSocketsData HortureServerMessage where
   fromDataMessage (Network.WebSockets.Text bs _) = fromMaybe HortureServerGarbage (decode bs)
   fromDataMessage (Network.WebSockets.Binary bs) = fromMaybe HortureServerGarbage (decode bs)
   fromLazyByteString bs = fromMaybe HortureServerGarbage (decode bs)
   toLazyByteString = encode
 
-$(deriveJSON defaultOptions ''HortureClientMessage)
-$(deriveJSON defaultOptions ''HortureServerMessage)

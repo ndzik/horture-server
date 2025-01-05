@@ -37,7 +37,7 @@ library
                         -fno-warn-unticked-promoted-constructors
                         -fno-warn-orphans
 
-    build-depends:      base ^>=4.14.3.0
+    build-depends:      base ^>=4.17
                         , haskell-twitch-api
                         , text
                         , lens
@@ -79,7 +79,7 @@ executable horture-server
                             -threaded
                             -O2
   other-modules:            Config
-  build-depends:            base ^>=4.14.3.0
+  build-depends:            base ^>=4.17
                             , horture-server-lib
                             , haskell-twitch-api
                             , directory

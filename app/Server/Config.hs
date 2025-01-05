@@ -27,9 +27,10 @@ data Config = Config
   }
   deriving (Show)
 
+$(deriveJSON defaultOptions {fieldLabelModifier = camelTo2 '_'} ''Config)
+
 parseConfig :: FilePath -> IO (Maybe Config)
 parseConfig fp = do
   bytes <- BSL.readFile fp
   return . decode @Config $ bytes
 
-$(deriveJSON defaultOptions {fieldLabelModifier = camelTo2 '_'} ''Config)
