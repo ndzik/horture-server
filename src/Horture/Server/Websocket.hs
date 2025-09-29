@@ -10,6 +10,7 @@ import Control.Concurrent (forkIO, killThread, newEmptyMVar, putMVar, takeMVar, 
 import Control.Concurrent.Chan.Synchronous
 import Control.Exception (catch)
 import Control.Lens
+import Control.Monad (void)
 import Control.Monad.RWS
 import Data.Aeson (encode)
 import Data.ByteString (ByteString)

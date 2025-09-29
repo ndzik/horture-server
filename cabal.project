@@ -13,5 +13,4 @@ test-show-details: streaming
 source-repository-package
   type: git
   location: https://github.com/ndzik/haskell-twitch-api.git
-  tag: f19f65eecfe7f028bd75f75cbfe482cfb7cc33d4
-
+  tag: d0dac13c90ccf315e5e764a26d28464115f3deaa
